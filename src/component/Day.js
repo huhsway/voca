@@ -1,5 +1,6 @@
 import dummy from "../db/data.json";
 import { useParams } from "react-router";
+import Word from "./Word";
 // App.js에서 :day의 값이 useParams 통해서 들어옴
 
 export default function Day() {
@@ -13,10 +14,7 @@ export default function Day() {
       <table>
         <tbody>
           {wordList.map((word) => (
-            <tr key={word.id}>
-              <td>{word.eng}</td>
-              <td>{word.kor}</td>
-            </tr>
+            <Word word = {word} key = {word.id}/>
           ))}
         </tbody>
       </table>
