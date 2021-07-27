@@ -1,6 +1,19 @@
 import { useState } from "react";
 
-export default function Word({word: w}) {
+interface IProps {
+  // word: any; // any는 절대로 남발하지 말자
+  word: IWord;
+}
+
+export interface IWord {
+  day: string;
+  eng: string;
+  kor: string;
+  isDone: boolean;
+  id: number;
+}
+
+export default function Word({ word: w }: IProps) {
   const [word, setWord] = useState(w);
   const [isShow, setIsShow] = useState(false);
   const [isDone, setIsDone] = useState(word.isDone);
@@ -12,35 +25,37 @@ export default function Word({word: w}) {
   function toggleDone() {
     // setIsDone(!isDone);
     fetch(`http://localhost:3001/words/${word.id}`, {
-      method : 'PUT',
-      headers : {
-        'Content-Type' : 'application/json',
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body : JSON.stringify({
+      body: JSON.stringify({
         ...word,
-        isDone : !isDone,
+        isDone: !isDone,
       }),
-    })
-    .then(res => {
-      if(res.ok){
+    }).then((res) => {
+      if (res.ok) {
         setIsDone(!isDone);
       }
-    })
+    });
   }
 
   function del() {
-    if(window.confirm('삭제 하시겠습니까?')) {
+    if (window.confirm("삭제 하시겠습니까?")) {
       fetch(`http://localhost:3001/words/${word.id}`, {
-        method: 'DELETE',
-      }).then(res => {
-        if(res.ok){
-          setWord({id: 0});
+        method: "DELETE",
+      }).then((res) => {
+        if (res.ok) {
+          setWord({ 
+            ...word,
+            id: 0 
+          });
         }
-      })
+      });
     }
   }
 
-  if (word.id === 0){
+  if (word.id === 0) {
     return null;
   }
 
