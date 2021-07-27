@@ -22,6 +22,10 @@ export default function DayList() {
   // count 배열을 두번째 인자로 넣으면 count가 변경되었을 경우에만 실행된다. 이것을 의존성 배열이라고 함
   // useEffect에서 렌더링 직후 한번만 실행되게 하려면 두번째 인자에 빈 배열을 넣자
 
+  if(days.length === 0){
+    return <span>Loading...</span>
+  }
+
   return (
     <ul className="list_day">
       {days.map((day) => (
